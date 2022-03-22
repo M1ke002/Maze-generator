@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js" integrity="sha512-NxocnqsXP3zm0Xb42zqVMvjQIktKEpTIbCXXyhBPxqGZHqhcOXHs4pXI/GoZ8lE+2NJONRifuBpi9DxC58L0Lw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="btns">
+        <button id="reset">Reset maze</button>
+        <input type="checkbox" id="sol">Show solution
+        <input type="checkbox" id="instantly">Generate instantly
+    </div>
+    <div class="btns">
+        <form action="" onsubmit="event.preventDefault()">
+            <button id="maze-size">Maze Size</button>
+            <input type="radio" value="small" name="size">
+            <label for="small">Small</label>
+            <input type="radio" value="medium" name="size" checked="true">
+            <label for="medium">Medium</label>
+            <input type="radio" value="large" name="size">
+            <label for="large">Large</label>
+        </form>
+    </div>
+    <div class="btns set-position">
+        <button disabled="true">Set position</button>
+        <p id="message">Click on the maze to set start and end position</p>
+    </div>
+    <script src="sketch.js"></script>
+</body>
+</html>

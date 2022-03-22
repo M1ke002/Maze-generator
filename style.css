@@ -1,0 +1,33 @@
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+canvas {
+    cursor: pointer;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+.btns {
+  text-align: center;
+  margin-top: 10px;
+}
+.set-position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 12px;
+}
+#message  {
+  margin-left: 8px;
+}
+#reset {
+  margin-right: 3px;
+}
+#sol {
+  margin-right: 3px;
+}
