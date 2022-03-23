@@ -9,21 +9,15 @@ var instant = false;
 var enablePath = false;
 var solved = false;
 var hasPath = false;
-//user select cells
+//user selects cells
 var enableUserSelect = false;
 var startIndex = 0;
 var endIndex = cellsPerRow*cellsPerRow-1;
 var clickedTimes = 0;
-//dom
-var resetBtn = document.getElementById("reset");
-var sizeBtn = document.getElementById("maze-size");
-var solutionBox = document.getElementById("sol");
-var instantBox = document.getElementById("instantly");
-var setPositionBtn = document.querySelector(".set-position button");
-var message = document.getElementById("message");
 
 function setup() {
     createCanvas(mazeSize,mazeSize);
+    setupBtns();
     // frameRate(1);
     var cellIndex = 0;
     for (let i = 0; i < mazeSize; i+=cellSize) {
@@ -62,7 +56,7 @@ function generateMaze() {
             current = chosenCell;
         }
     } else {
-        setPositionBtn.disabled = false;
+        document.querySelector(".set-position button").disabled = false;
         if (enablePath) displayPath();
     }
 }
@@ -79,7 +73,7 @@ function generateMazeInstantly() {
             current = chosenCell;
         }
     }
-    setPositionBtn.disabled = false;
+    document.querySelector(".set-position button").disabled = false;
     generateCell();
     if (enablePath) displayPath();
 }
@@ -94,7 +88,6 @@ function resetMaze() {
     startIndex = 0; //recalculate start index
     endIndex = cellsPerRow*cellsPerRow-1; //recalculate end index
     enableUserSelect = false;
-    setPositionBtn.disabled = true;
     setup(); //setup again
 }
 
@@ -217,46 +210,7 @@ function solve(currCell, endCell) {
             return true;
         }
     }
-
     return false; //no paths found
-}
-
-//deal with buttons
-resetBtn.onclick = resetMaze;
-
-sizeBtn.onclick = function() { //set maze size
-    var choices = document.forms[0];
-    for (var i = 1; i < choices.length; i++) { //i starts at 1 because 0 is button
-        if (choices[i].checked) {
-            if (choices[i].value === "large") { //600 , 20
-                mazeSize = 600;
-                cellSize = 20;
-            } else if (choices[i].value === "medium") { //600, 30
-                mazeSize = 600;
-                cellSize = 30;
-            } else { //400, 40
-                mazeSize = 400;
-                cellSize = 40;
-            }
-            resetMaze();
-        }
-    }
-}
-
-solutionBox.onchange = function() { // show solution
-    if (solutionBox.checked) {
-        enablePath = true;
-    } else {
-        enablePath = false;
-    }
-}
-
-instantBox.onchange = function() { //generate maze instantly
-    if (instantBox.checked) {
-        instant = true;
-    } else {
-        instant = false;
-    }
 }
 
 //hover
@@ -291,22 +245,68 @@ function mouseClicked() {
     }
 }
 
-setPositionBtn.onclick = function() {
-    if (this.innerHTML === "Set position") {
-        this.innerHTML = "Confirm?";
-        enableUserSelect = true;
-        enablePath = false;
-        resetBtn.disabled = true;
-        sizeBtn.disabled = true;
-        solutionBox.disabled = true;
-    } else {
-        this.innerHTML = "Set position";
-        enableUserSelect = false;
-        if (solutionBox.checked) enablePath = true;
-        resetBtn.disabled = false;
-        sizeBtn.disabled = false;
-        solutionBox.disabled = false;
-        for (let cell of grid.values()) cell.correctPath = false; //reset correctPath
-        solved = false;
+function setupBtns() {
+    var resetBtn = document.getElementById("reset");
+    var sizeBtn = document.getElementById("maze-size");
+    var solutionBox = document.getElementById("sol");
+    var instantBox = document.getElementById("instantly");
+    var setPositionBtn = document.querySelector(".set-position button");
+
+    setPositionBtn.disabled = true;
+    resetBtn.onclick = resetMaze;
+
+    sizeBtn.onclick = function() { //set maze size
+        var choices = document.forms[0];
+        for (var i = 1; i < choices.length; i++) { //i starts at 1 because 0 is button
+            if (choices[i].checked) {
+                if (choices[i].value === "large") { //600 , 20
+                    mazeSize = 600;
+                    cellSize = 20;
+                } else if (choices[i].value === "medium") { //600, 30
+                    mazeSize = 600;
+                    cellSize = 30;
+                } else { //400, 40
+                    mazeSize = 400;
+                    cellSize = 40;
+                }
+                resetMaze();
+            }
+        }
+    }
+
+    solutionBox.onchange = function() { // show solution
+        if (solutionBox.checked) {
+            enablePath = true;
+        } else {
+            enablePath = false;
+        }
+    }
+
+    instantBox.onchange = function() { //generate maze instantly
+        if (instantBox.checked) {
+            instant = true;
+        } else {
+            instant = false;
+        }
+    }
+
+    setPositionBtn.onclick = function() {
+        if (this.innerHTML === "Set position") {
+            this.innerHTML = "Confirm?";
+            enableUserSelect = true;
+            enablePath = false;
+            resetBtn.disabled = true;
+            sizeBtn.disabled = true;
+            solutionBox.disabled = true;
+        } else {
+            this.innerHTML = "Set position";
+            enableUserSelect = false;
+            if (solutionBox.checked) enablePath = true;
+            resetBtn.disabled = false;
+            sizeBtn.disabled = false;
+            solutionBox.disabled = false;
+            for (let cell of grid.values()) cell.correctPath = false; //reset correctPath
+            solved = false;
+        }
     }
 }
